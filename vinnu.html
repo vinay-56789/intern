@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    
+    .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
+    
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    input, select, button {
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+    
+    button {
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #4cae4c;
+    }
+    
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    
+    li.complete {
+        text-decoration: line-through;
+        background-color: #d4edda;
+    }
+    
+    .delete-btn {
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 5px 10px;
+    }
+    
+    .delete-btn:hover {
+        background-color: #c9302c;
+    }
+ </style>   
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <form id="task-form">
+            <input type="text" id="task-input" placeholder="Enter your task" required>
+            <input type="date" id="due-date">
+            <select id="priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <select id="category">
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="other">Other</option>
+            </select>
+            <button type="submit">Add Task</button>
+        </form>
+        <ul id="task-list"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+<script>
+    document.getElementById('task-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const taskInput = document.getElementById('task-input').value;
+    const dueDate = document.getElementById('due-date').value;
+    const priority = document.getElementById('priority').value;
+    const category = document.getElementById('category').value;
+
+    const taskList = document.getElementById('task-list');
+
+    const listItem = document.createElement('li');
+    listItem.innerHTML = `
+        ${taskInput} - ${dueDate} - ${priority} - ${category}
+        <button class="complete-btn">Complete</button>
+        <button class="delete-btn">Delete</button>
+    `;
+
+    taskList.appendChild(listItem);
+
+    document.getElementById('task-input').value = '';
+    document.getElementById('due-date').value = '';
+    document.getElementById('priority').value = 'low';
+    document.getElementById('category').value = 'work';
+
+    listItem.querySelector('.complete-btn').addEventListener('click', function() {
+        listItem.classList.toggle('complete');
+    });
+
+    listItem.querySelector('.delete-btn').addEventListener('click', function() {
+        taskList.removeChild(listItem);
+    });
+});
+</script>
+</html>
